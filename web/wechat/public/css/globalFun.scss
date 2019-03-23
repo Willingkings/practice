@@ -1,0 +1,54 @@
+/*
+* Sass Map 嵌套取值
+* source: https://segmentfault.com/a/1190000002439157
+* start
+*/
+@function tuple-key($tuple) {
+  @if length($tuple) < 1 {
+    @return null;
+  } @else {
+    @return nth($tuple, 1);
+  }
+}
+
+@function tuple-value($tuple) {
+  @if length($tuple) < 2 {
+    @return null;
+  } @else {
+    @return nth($tuple, 2);
+  }
+}
+
+@function key($tuple) {
+  @return tuple-key($tuple);
+}
+
+@function value($tuple) {
+  @return tuple-value($tuple);
+}
+
+@function list-map-check($list) {
+  @if length($list) == 2 and length(nth($list, 1)) == 1 {
+    @return append((), $list, 'comma');
+  }
+  @return $list;
+}
+
+@function map-get($list, $key, $check: true) {
+  @if $check { $list: list-map-check($list); } @each $tuple in $list {
+  @if tuple-key($tuple) == $key { @return list-map-check(tuple-value($tuple)); } }
+  @return null;
+}
+
+@function map-get-z($list, $keys...) {
+  @if $list == null { @return null; }
+  $length: length($keys);
+  $list: map-get($list, nth($keys, 1));
+  @if $length > 1 {
+    @for $n from 2 through $length {
+      @if $list == null { @return null; }
+      $list: map-get($list, nth($keys, $n), false); }
+    @return $list; }
+  @else { @return $list; }
+}
+/****** end *****/

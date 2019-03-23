@@ -1,0 +1,102 @@
+@import "globalFun";
+html, body, div, ul, li, a, span, b, i {
+  padding: 0;
+  margin: 0;
+}
+
+/****** 公共样式 *****/
+
+/*
+* 基础长度 10px  （1rem=16px）
+* example: 10*$basisSize
+*/
+$basisSize: 0.625rem;
+
+/*
+* 颜色map
+* example:  map-get(map-get($colorMap,center),bgcolor);
+*/
+$colorMap: (
+  default: (
+    bgcolor: #fff,
+    text: #333,
+    link: #dddddd,
+    btn: #09bb07,
+  ),
+  center: (
+    bgcolor: #f4f4f4,
+    header-bgcolor: #09bb07,
+    header-text: #fff
+  )
+);
+
+/*
+* 混合宏
+* padding
+* example:  @include pt(5);
+*/
+@mixin pt($var){
+  padding-top: $var*$basisSize;
+}
+@mixin pl($var){
+  padding-left: $var*$basisSize;
+}
+@mixin pb($var){
+  padding-bottom: $var*$basisSize;
+}
+@mixin pr($var){
+  padding-right: $var*$basisSize;
+}
+
+/*
+* 混合宏
+* margin
+* example:  @include mt(5);
+*/
+@mixin mt($var){
+  margin-top: $var*$basisSize;
+}
+@mixin ml($var){
+  margin-left: $var*$basisSize;
+}
+@mixin mb($var){
+  margin-bottom: $var*$basisSize;
+}
+@mixin mr($var){
+  margin-right: $var*$basisSize;
+}
+
+/*
+* 混合宏
+* border
+* example:  @include border_b();
+*/
+
+@mixin border_b($num:1px,$color:#ccc){
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    border-top: 1px solid $color;
+  }
+}
+
+/*2倍和3倍图片*/
+@mixin bg-image($url){
+  background-image: url($url + ".png");
+  @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+    background-image: url($url + "@2x.png");
+  }
+  @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    background-image: url($url + "@3x.png");
+  }
+}
+
+
+
+
+
